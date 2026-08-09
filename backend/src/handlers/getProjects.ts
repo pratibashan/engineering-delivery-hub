@@ -7,7 +7,7 @@ export async function handler(
 ): Promise<APIGatewayProxyResult> {
   console.log("Received request:", event.httpMethod);
 
-  const projects = getAllProjects();
+  const projects = await getAllProjects();
 
   return {
     statusCode: 200,

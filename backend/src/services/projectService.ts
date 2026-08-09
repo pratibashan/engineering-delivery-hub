@@ -1,10 +1,29 @@
-import { projects } from "../data/projects";
+import {
+  getAllProjects as getAllProjectsFromStore,
+  getProjectById as getProjectByIdFromStore,
+  saveProject,
+} from "../data/projectStore";
+
+import type { CreateProjectInput } from "../schemas/projectSchema";
 import type { Project } from "../types/project";
 
-export function getAllProjects(): Project[] {
-  return projects;
+export async function getAllProjects(): Promise<Project[]> {
+  return getAllProjectsFromStore();
 }
 
-export function getProjectById(id: string): Project | undefined {
-  return projects.find((project) => project.id === id);
+export async function getProjectById(id: string): Promise<Project | undefined> {
+  return getProjectByIdFromStore(id);
+}
+
+export async function createProject(
+  input: CreateProjectInput,
+): Promise<Project> {
+  const project: Project = {
+    id: crypto.randomUUID(),
+    ...input,
+  };
+
+  await saveProject(project);
+
+  return project;
 }

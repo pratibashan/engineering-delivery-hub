@@ -19,7 +19,7 @@ export async function handler(
     };
   }
 
-  const project = getProjectById(projectId);
+  const project = await getProjectById(projectId);
 
   if (!project) {
     return {
