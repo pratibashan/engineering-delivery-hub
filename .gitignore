@@ -8,6 +8,12 @@ node_modules/
 !.yarn/releases
 !.yarn/versions
 
+# AWS SAM build artifacts
+backend/.aws-sam/
+
+# Manual Lambda build artifacts
+backend/lambda-dist/
+
 # Testing
 coverage/
 
