@@ -69,6 +69,33 @@ Resources:
         Target: es2022
         Sourcemap: true
 
+  GetProjectByIdFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: .
+      Handler: src/handlers/getProjectById.handler
+      Policies:
+        - Statement:
+            - Effect: Allow
+              Action:
+                - dynamodb:GetItem
+              Resource: arn:aws:dynamodb:us-east-2:867719008416:table/engineering-delivery-projects
+      Events:
+        GetProjectById:
+          Type: HttpApi
+          Properties:
+            Path: /projects/{id}
+            Method: GET
+
+    Metadata:
+      BuildMethod: esbuild
+      BuildProperties:
+        EntryPoints:
+          - src/handlers/getProjectById.ts
+        Minify: false
+        Target: es2022
+        Sourcemap: true
+
 Outputs:
   GetProjectsApiUrl:
     Description: URL for the projects API
