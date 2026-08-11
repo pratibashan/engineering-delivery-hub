@@ -42,7 +42,34 @@ Resources:
         Target: es2022
         Sourcemap: true
 
+  CreateProjectFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: .
+      Handler: src/handlers/createProject.handler
+      Policies:
+        - Statement:
+            - Effect: Allow
+              Action:
+                - dynamodb:PutItem
+              Resource: arn:aws:dynamodb:us-east-2:867719008416:table/engineering-delivery-projects
+      Events:
+        CreateProject:
+          Type: HttpApi
+          Properties:
+            Path: /projects
+            Method: POST
+
+    Metadata:
+      BuildMethod: esbuild
+      BuildProperties:
+        EntryPoints:
+          - src/handlers/createProject.ts
+        Minify: false
+        Target: es2022
+        Sourcemap: true
+
 Outputs:
   GetProjectsApiUrl:
-    Description: URL for the GET /projects API
+    Description: URL for the projects API
     Value: !Sub "https://${ServerlessHttpApi}.execute-api.${AWS::Region}.${AWS::URLSuffix}/projects"
