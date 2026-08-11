@@ -1,14 +1,12 @@
 type ProjectCardProps = {
   name: string;
   status: "On Track" | "At Risk" | "Blocked";
-  owner: string;
   progress: number;
 };
 
 export default function ProjectCard({
   name,
   status,
-  owner,
   progress,
 }: ProjectCardProps) {
   const statusStyles = {
@@ -22,7 +20,6 @@ export default function ProjectCard({
       <div className="flex items-start justify-between gap-4">
         <div>
           <h2 className="text-lg font-semibold text-white">{name}</h2>
-          <p className="mt-1 text-sm text-slate-400">Owner: {owner}</p>
         </div>
 
         <span

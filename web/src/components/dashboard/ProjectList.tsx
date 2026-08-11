@@ -53,7 +53,6 @@ export default function ProjectList({ projects }: ProjectListProps) {
             key={project.name}
             name={project.name}
             status={project.status}
-            owner={project.owner}
             progress={project.progress}
           />
         ))}

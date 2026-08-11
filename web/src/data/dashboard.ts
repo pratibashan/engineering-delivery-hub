@@ -1,7 +1,4 @@
-import type {
-  DashboardStat,
-  Project,
-} from "@/types/dashboard";
+import type { DashboardStat } from "@/types/dashboard";
 
 export const dashboardStats: DashboardStat[] = [
   {
@@ -18,26 +15,5 @@ export const dashboardStats: DashboardStat[] = [
     label: "Team blockers",
     value: 3,
     description: "Issues affecting delivery",
-  },
-];
-
-export const recentProjects: Project[] = [
-  {
-    name: "Mobile Experience",
-    status: "On Track",
-    owner: "Frontend Team",
-    progress: 78,
-  },
-  {
-    name: "AI Summary Service",
-    status: "At Risk",
-    owner: "Platform Team",
-    progress: 54,
-  },
-  {
-    name: "Authentication Upgrade",
-    status: "Blocked",
-    owner: "Cloud Team",
-    progress: 32,
   },
 ];

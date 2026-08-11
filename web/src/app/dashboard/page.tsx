@@ -1,12 +1,15 @@
 import StatCard from "@/components/dashboard/StatCard";
 import ProjectList from "@/components/dashboard/ProjectList";
-import { dashboardStats, recentProjects } from "@/data/dashboard";
+import { dashboardStats } from "@/data/dashboard";
+import { getProjects } from "@/lib/projects";
 
-export default function DashboardPage() {
+export default async function DashboardPage() {
+  const projects = await getProjects();
+
   return (
-    <main className="min-h-screen bg-slate-950 px-6 py-12 text-white">
-      <section className="mx-auto max-w-6xl">
-        <p className="text-sm font-semibold uppercase tracking-widest text-cyan-400">
+    <main className="min-h-screen bg-slate-950 text-white">
+      <section className="mx-auto max-w-6xl px-6 py-16">
+        <p className="text-sm font-semibold uppercase tracking-[0.2em] text-cyan-400">
           Dashboard
         </p>
 
@@ -29,7 +32,7 @@ export default function DashboardPage() {
           ))}
         </div>
 
-        <ProjectList projects={recentProjects} />
+        <ProjectList projects={projects} />
       </section>
     </main>
   );
