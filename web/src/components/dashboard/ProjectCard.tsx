@@ -1,47 +1,50 @@
+import Link from "next/link";
+import { getProjectStatusClasses } from "@/lib/projectStatus";
+import type { Project } from "@/types/dashboard";
+
 type ProjectCardProps = {
-  name: string;
-  status: "On Track" | "At Risk" | "Blocked";
-  progress: number;
+  project: Project;
 };
 
-export default function ProjectCard({
-  name,
-  status,
-  progress,
-}: ProjectCardProps) {
-  const statusStyles = {
-    "On Track": "border-emerald-500/30 bg-emerald-500/10 text-emerald-300",
-    "At Risk": "border-amber-500/30 bg-amber-500/10 text-amber-300",
-    Blocked: "border-rose-500/30 bg-rose-500/10 text-rose-300",
-  };
-
+export default function ProjectCard({ project }: ProjectCardProps) {
   return (
-    <article className="rounded-2xl border border-slate-800 bg-slate-900 p-6">
-      <div className="flex items-start justify-between gap-4">
-        <div>
-          <h2 className="text-lg font-semibold text-white">{name}</h2>
+    <Link href={`/dashboard/projects/${project.id}`} className="block">
+      <article className="rounded-2xl border border-slate-800 bg-slate-900 p-6 transition hover:border-slate-700 hover:bg-slate-900/80">
+        <div className="flex items-start justify-between gap-4">
+          <h3 className="text-lg font-semibold text-white">{project.name}</h3>
+
+          <span
+            className={`shrink-0 rounded-full border px-3 py-1 text-xs font-medium ${getProjectStatusClasses(
+              project.status,
+            )}`}
+          >
+            {project.status}
+          </span>
         </div>
 
-        <span
-          className={`rounded-full border border-slate-700 px-3 py-1 text-xs ${statusStyles[status]}`}
-        >
-          {status}
-        </span>
-      </div>
+        <div className="mt-8">
+          <div className="flex items-center justify-between text-sm">
+            <span className="text-slate-400">Progress</span>
 
-      <div className="mt-6">
-        <div className="mb-2 flex justify-between text-sm text-slate-400">
-          <span>Progress</span>
-          <span>{progress}%</span>
+            <span className="font-medium text-slate-300">
+              {project.progress}%
+            </span>
+          </div>
+
+          <div className="mt-3 h-2 overflow-hidden rounded-full bg-slate-800">
+            <div
+              className="h-full rounded-full bg-cyan-400"
+              style={{ width: `${project.progress}%` }}
+            />
+          </div>
         </div>
 
-        <div className="h-2 rounded-full bg-slate-800">
-          <div
-            className="h-2 rounded-full bg-cyan-400"
-            style={{ width: `${progress}%` }}
-          />
+        <div className="mt-6 border-t border-slate-800 pt-4">
+          <span className="text-sm font-medium text-cyan-400">
+            View project →
+          </span>
         </div>
-      </div>
-    </article>
+      </article>
+    </Link>
   );
 }

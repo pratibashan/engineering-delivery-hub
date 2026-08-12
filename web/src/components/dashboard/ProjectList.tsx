@@ -49,12 +49,7 @@ export default function ProjectList({ projects }: ProjectListProps) {
 
       <div className="grid gap-5 lg:grid-cols-3">
         {filteredProjects.map((project) => (
-          <ProjectCard
-            key={project.name}
-            name={project.name}
-            status={project.status}
-            progress={project.progress}
-          />
+          <ProjectCard key={project.id} project={project} />
         ))}
       </div>
     </section>
