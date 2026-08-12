@@ -1,7 +1,9 @@
 import {
+  deleteProjectById,
   getAllProjects as getAllProjectsFromStore,
   getProjectById as getProjectByIdFromStore,
   saveProject,
+  updateProject,
 } from "../data/projectStore";
 
 import type { CreateProjectInput } from "../schemas/projectSchema";
@@ -26,4 +28,15 @@ export async function createProject(
   await saveProject(project);
 
   return project;
+}
+export async function updateExistingProject(
+  project: Project,
+): Promise<Project> {
+  await updateProject(project);
+
+  return project;
+}
+
+export async function deleteProject(id: string): Promise<void> {
+  await deleteProjectById(id);
 }

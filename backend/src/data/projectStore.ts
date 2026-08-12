@@ -1,5 +1,6 @@
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
 import {
+  DeleteCommand,
   DynamoDBDocumentClient,
   GetCommand,
   PutCommand,
@@ -54,6 +55,36 @@ export async function saveProject(project: Project): Promise<void> {
     new PutCommand({
       TableName: tableName,
       Item: project,
+    }),
+  );
+}
+
+export async function updateProject(project: Project): Promise<void> {
+  if (!tableName) {
+    throw new Error("PROJECTS_TABLE_NAME is not configured");
+  }
+
+  await documentClient.send(
+    new PutCommand({
+      TableName: tableName,
+      Item: project,
+      ConditionExpression: "attribute_exists(id)",
+    }),
+  );
+}
+
+export async function deleteProjectById(id: string): Promise<void> {
+  if (!tableName) {
+    throw new Error("PROJECTS_TABLE_NAME is not configured");
+  }
+
+  await documentClient.send(
+    new DeleteCommand({
+      TableName: tableName,
+      Key: {
+        id,
+      },
+      ConditionExpression: "attribute_exists(id)",
     }),
   );
 }

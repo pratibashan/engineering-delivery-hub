@@ -9,3 +9,5 @@ export const createProjectSchema = z.object({
 });
 
 export type CreateProjectInput = z.infer<typeof createProjectSchema>;
+
+export const updateProjectSchema = createProjectSchema;

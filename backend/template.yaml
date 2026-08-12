@@ -23,7 +23,6 @@ Resources:
         info:
           title: Engineering Delivery Hub API
           version: "1.0"
-
         paths: {}
 
       CorsConfiguration:
@@ -34,6 +33,8 @@ Resources:
         AllowMethods:
           - GET
           - POST
+          - PUT
+          - DELETE
           - OPTIONS
 
   GetProjectsFunction:
@@ -122,6 +123,66 @@ Resources:
       BuildProperties:
         EntryPoints:
           - src/handlers/getProjectById.ts
+        Minify: false
+        Target: es2022
+        Sourcemap: true
+
+  UpdateProjectFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: .
+      Handler: src/handlers/updateProject.handler
+
+      Policies:
+        - Statement:
+            - Effect: Allow
+              Action:
+                - dynamodb:PutItem
+              Resource: arn:aws:dynamodb:us-east-2:867719008416:table/engineering-delivery-projects
+
+      Events:
+        UpdateProject:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref ProjectsHttpApi
+            Path: /projects/{id}
+            Method: PUT
+
+    Metadata:
+      BuildMethod: esbuild
+      BuildProperties:
+        EntryPoints:
+          - src/handlers/updateProject.ts
+        Minify: false
+        Target: es2022
+        Sourcemap: true
+
+  DeleteProjectFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: .
+      Handler: src/handlers/deleteProject.handler
+
+      Policies:
+        - Statement:
+            - Effect: Allow
+              Action:
+                - dynamodb:DeleteItem
+              Resource: arn:aws:dynamodb:us-east-2:867719008416:table/engineering-delivery-projects
+
+      Events:
+        DeleteProject:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref ProjectsHttpApi
+            Path: /projects/{id}
+            Method: DELETE
+
+    Metadata:
+      BuildMethod: esbuild
+      BuildProperties:
+        EntryPoints:
+          - src/handlers/deleteProject.ts
         Minify: false
         Target: es2022
         Sourcemap: true
