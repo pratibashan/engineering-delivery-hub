@@ -15,21 +15,45 @@ Globals:
         PROJECTS_TABLE_NAME: engineering-delivery-projects
 
 Resources:
+  ProjectsHttpApi:
+    Type: AWS::Serverless::HttpApi
+    Properties:
+      DefinitionBody:
+        openapi: 3.0.1
+        info:
+          title: Engineering Delivery Hub API
+          version: "1.0"
+
+        paths: {}
+
+      CorsConfiguration:
+        AllowOrigins:
+          - "http://localhost:3000"
+        AllowHeaders:
+          - "Content-Type"
+        AllowMethods:
+          - GET
+          - POST
+          - OPTIONS
+
   GetProjectsFunction:
     Type: AWS::Serverless::Function
     Properties:
       CodeUri: .
       Handler: src/handlers/getProjects.handler
+
       Policies:
         - Statement:
             - Effect: Allow
               Action:
                 - dynamodb:Scan
               Resource: arn:aws:dynamodb:us-east-2:867719008416:table/engineering-delivery-projects
+
       Events:
         GetProjects:
           Type: HttpApi
           Properties:
+            ApiId: !Ref ProjectsHttpApi
             Path: /projects
             Method: GET
 
@@ -47,16 +71,19 @@ Resources:
     Properties:
       CodeUri: .
       Handler: src/handlers/createProject.handler
+
       Policies:
         - Statement:
             - Effect: Allow
               Action:
                 - dynamodb:PutItem
               Resource: arn:aws:dynamodb:us-east-2:867719008416:table/engineering-delivery-projects
+
       Events:
         CreateProject:
           Type: HttpApi
           Properties:
+            ApiId: !Ref ProjectsHttpApi
             Path: /projects
             Method: POST
 
@@ -74,16 +101,19 @@ Resources:
     Properties:
       CodeUri: .
       Handler: src/handlers/getProjectById.handler
+
       Policies:
         - Statement:
             - Effect: Allow
               Action:
                 - dynamodb:GetItem
               Resource: arn:aws:dynamodb:us-east-2:867719008416:table/engineering-delivery-projects
+
       Events:
         GetProjectById:
           Type: HttpApi
           Properties:
+            ApiId: !Ref ProjectsHttpApi
             Path: /projects/{id}
             Method: GET
 
@@ -97,6 +127,10 @@ Resources:
         Sourcemap: true
 
 Outputs:
+  ProjectsApiUrl:
+    Description: Base URL for the projects API
+    Value: !Sub "https://${ProjectsHttpApi}.execute-api.${AWS::Region}.${AWS::URLSuffix}"
+
   GetProjectsApiUrl:
-    Description: URL for the projects API
-    Value: !Sub "https://${ServerlessHttpApi}.execute-api.${AWS::Region}.${AWS::URLSuffix}/projects"
+    Description: URL for GET /projects
+    Value: !Sub "https://${ProjectsHttpApi}.execute-api.${AWS::Region}.${AWS::URLSuffix}/projects"
