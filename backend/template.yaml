@@ -187,6 +187,46 @@ Resources:
         Target: es2022
         Sourcemap: true
 
+  GenerateProjectSummaryFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: .
+      Handler: src/handlers/generateProjectSummary.handler
+
+      # AI requests may take longer than regular CRUD requests.
+      Timeout: 30
+
+      Policies:
+        - Statement:
+            # The AI Lambda must first read the project from DynamoDB.
+            - Effect: Allow
+              Action:
+                - dynamodb:GetItem
+              Resource: arn:aws:dynamodb:us-east-2:867719008416:table/engineering-delivery-projects
+
+            # Then it can send the project information to Claude through Bedrock.
+            - Effect: Allow
+              Action:
+                - bedrock:InvokeModel
+              Resource: "*"
+
+      Events:
+        GenerateProjectSummary:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref ProjectsHttpApi
+            Path: /projects/{id}/summary
+            Method: POST
+
+    Metadata:
+      BuildMethod: esbuild
+      BuildProperties:
+        EntryPoints:
+          - src/handlers/generateProjectSummary.ts
+        Minify: false
+        Target: es2022
+        Sourcemap: true
+
 Outputs:
   ProjectsApiUrl:
     Description: Base URL for the projects API
