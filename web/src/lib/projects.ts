@@ -112,3 +112,26 @@ export async function deleteProject(id: string): Promise<void> {
     throw new Error(`Failed to delete project: ${response.status}`);
   }
 }
+
+export type ProjectSummary = {
+  projectId: string;
+  summary: string;
+};
+
+export async function generateProjectSummary(
+  id: string,
+): Promise<ProjectSummary> {
+  if (!apiUrl) {
+    throw new Error("NEXT_PUBLIC_API_URL is not configured");
+  }
+
+  const response = await fetch(`${apiUrl}/projects/${id}/summary`, {
+    method: "POST",
+  });
+
+  if (!response.ok) {
+    throw new Error(`Failed to generate project summary: ${response.status}`);
+  }
+
+  return response.json();
+}

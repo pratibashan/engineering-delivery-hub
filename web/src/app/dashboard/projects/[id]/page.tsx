@@ -2,6 +2,7 @@ import Link from "next/link";
 import { getProjectById } from "@/lib/projects";
 import { getProjectStatusClasses } from "@/lib/projectStatus";
 import DeleteProjectButton from "@/components/projects/DeleteProjectButton";
+import GenerateProjectInsight from "@/components/projects/GenerateProjectInsight";
 
 type ProjectDetailsPageProps = {
   params: Promise<{
@@ -93,6 +94,7 @@ export default async function ProjectDetailsPage({
             </p>
           </div>
         </div>
+        <GenerateProjectInsight projectId={project.id} />
       </section>
     </main>
   );
