@@ -73,6 +73,20 @@ export default async function ProjectDetailsPage({
           </div>
 
           <div className="mt-8 border-t border-slate-800 pt-6">
+            <p className="text-sm text-slate-500">Description</p>
+            <p className="mt-2 text-slate-300">
+              {project.description || "No description added."}
+            </p>
+          </div>
+
+          <div className="mt-8 border-t border-slate-800 pt-6">
+            <p className="text-sm text-slate-500">Blockers</p>
+            <p className="mt-2 text-slate-300">
+              {project.blockers || "No blockers reported."}
+            </p>
+          </div>
+
+          <div className="mt-8 border-t border-slate-800 pt-6">
             <p className="text-sm text-slate-500">Project ID</p>
             <p className="mt-2 break-all text-sm text-slate-300">
               {project.id}

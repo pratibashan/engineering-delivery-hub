@@ -14,9 +14,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Full-Stack AI Portfolio",
+  title: "Engineering Delivery Hub",
   description:
-    "A production-style full-stack application built with Next.js, React Native, TypeScript, AWS, and AI.",
+    "A production-style application built with Next.js, TypeScript, AWS serverless services, and generative AI.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

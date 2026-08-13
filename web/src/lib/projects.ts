@@ -40,6 +40,8 @@ type CreateProjectInput = {
   name: string;
   status: Project["status"];
   progress: number;
+  description?: string;
+  blockers?: string;
 };
 
 export async function createProject(
@@ -70,6 +72,8 @@ type UpdateProjectInput = {
   name: string;
   status: Project["status"];
   progress: number;
+  description?: string;
+  blockers?: string;
 };
 
 export async function updateProject(

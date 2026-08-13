@@ -11,4 +11,6 @@ export type Project = {
   name: string;
   status: ProjectStatus;
   progress: number;
+  description?: string;
+  blockers?: string;
 };

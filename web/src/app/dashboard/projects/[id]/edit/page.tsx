@@ -16,6 +16,8 @@ export default function EditProjectPage() {
   const [name, setName] = useState("");
   const [status, setStatus] = useState<ProjectStatus>("On Track");
   const [progress, setProgress] = useState(0);
+  const [description, setDescription] = useState("");
+  const [blockers, setBlockers] = useState("");
 
   const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -29,6 +31,8 @@ export default function EditProjectPage() {
         setName(project.name);
         setStatus(project.status);
         setProgress(project.progress);
+        setDescription(project.description ?? "");
+        setBlockers(project.blockers ?? "");
       } catch (error) {
         console.error(error);
         setError("Unable to load project.");
@@ -40,7 +44,7 @@ export default function EditProjectPage() {
     loadProject();
   }, [id]);
 
-  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
 
     setError("");
@@ -51,6 +55,8 @@ export default function EditProjectPage() {
         name,
         status,
         progress,
+        description,
+        blockers,
       });
 
       router.push(`/dashboard/projects/${id}`);
@@ -108,6 +114,34 @@ export default function EditProjectPage() {
               value={name}
               onChange={(event) => setName(event.target.value)}
               required
+              className="mt-3 w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 outline-none transition focus:border-cyan-400"
+            />
+          </div>
+
+          <div>
+            <label htmlFor="description" className="block text-sm font-medium">
+              Description
+            </label>
+
+            <textarea
+              id="description"
+              value={description}
+              onChange={(event) => setDescription(event.target.value)}
+              rows={4}
+              className="mt-3 w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 outline-none transition focus:border-cyan-400"
+            />
+          </div>
+
+          <div>
+            <label htmlFor="blockers" className="block text-sm font-medium">
+              Blockers
+            </label>
+
+            <textarea
+              id="blockers"
+              value={blockers}
+              onChange={(event) => setBlockers(event.target.value)}
+              rows={3}
               className="mt-3 w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 outline-none transition focus:border-cyan-400"
             />
           </div>
