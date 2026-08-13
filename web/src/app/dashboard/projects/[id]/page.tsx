@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getProjectById } from "@/lib/projects";
 import { getProjectStatusClasses } from "@/lib/projectStatus";
+import DeleteProjectButton from "@/components/projects/DeleteProjectButton";
 
 type ProjectDetailsPageProps = {
   params: Promise<{
@@ -32,6 +33,17 @@ export default async function ProjectDetailsPage({
         <h1 className="mt-3 text-4xl font-bold tracking-tight">
           {project.name}
         </h1>
+
+        <div className="mt-4 flex flex-wrap gap-3">
+          <Link
+            href={`/dashboard/projects/${project.id}/edit`}
+            className="rounded-lg border border-slate-700 px-4 py-2 text-sm font-semibold text-slate-200 transition hover:bg-slate-800"
+          >
+            Edit project
+          </Link>
+
+          <DeleteProjectButton id={project.id} />
+        </div>
 
         <div className="mt-10 rounded-2xl border border-slate-800 bg-slate-900 p-8">
           <div className="flex items-center justify-between">
