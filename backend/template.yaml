@@ -192,23 +192,23 @@ Resources:
     Properties:
       CodeUri: .
       Handler: src/handlers/generateProjectSummary.handler
-
-      # AI requests may take longer than regular CRUD requests.
       Timeout: 30
 
       Policies:
         - Statement:
-            # The AI Lambda must first read the project from DynamoDB.
             - Effect: Allow
               Action:
                 - dynamodb:GetItem
               Resource: arn:aws:dynamodb:us-east-2:867719008416:table/engineering-delivery-projects
 
-            # Then it can send the project information to Claude through Bedrock.
             - Effect: Allow
               Action:
                 - bedrock:InvokeModel
-              Resource: "*"
+              Resource:
+                - arn:aws:bedrock:us-east-2:867719008416:inference-profile/us.anthropic.claude-sonnet-4-6
+                - arn:aws:bedrock:us-east-1::foundation-model/anthropic.claude-sonnet-4-6
+                - arn:aws:bedrock:us-east-2::foundation-model/anthropic.claude-sonnet-4-6
+                - arn:aws:bedrock:us-west-2::foundation-model/anthropic.claude-sonnet-4-6
 
       Events:
         GenerateProjectSummary:

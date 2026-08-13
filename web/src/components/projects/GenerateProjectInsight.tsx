@@ -50,7 +50,11 @@ export default function GenerateProjectInsight({
           disabled={isGenerating}
           className="rounded-lg bg-cyan-400 px-4 py-2 text-sm font-semibold text-slate-950 transition hover:bg-cyan-300 disabled:cursor-not-allowed disabled:opacity-50"
         >
-          {isGenerating ? "Generating..." : "Generate AI Insight"}
+          {isGenerating
+            ? "Generating..."
+            : result
+              ? "Regenerate Insight"
+              : "Generate AI Insight"}
         </button>
       </div>
 

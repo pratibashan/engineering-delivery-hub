@@ -71,7 +71,13 @@ If important information is missing, clearly identify it as missing rather than 
 
 Provide recommendations based only on the available project information.
 
-Keep the response concise and useful for an engineering manager.
+Formatting requirements:
+- Use Markdown.
+- Do not use Markdown tables.
+- Use bullet points for delivery risks.
+- Use a numbered list for recommended next actions.
+- Keep headings short and clear.
+- Keep the response concise and useful for an engineering manager.
 `;
 
   try {
