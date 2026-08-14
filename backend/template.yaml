@@ -30,12 +30,23 @@ Resources:
           - "http://localhost:3000"
         AllowHeaders:
           - "Content-Type"
+          - "Authorization"
         AllowMethods:
           - GET
           - POST
           - PUT
           - DELETE
           - OPTIONS
+
+      Auth:
+        DefaultAuthorizer: CognitoJWTAuthorizer
+        Authorizers:
+          CognitoJWTAuthorizer:
+            IdentitySource: "$request.header.Authorization"
+            JwtConfiguration:
+              issuer: "https://cognito-idp.us-east-2.amazonaws.com/us-east-2_RiefwiefU"
+              audience:
+                - "1a7mmts4l88gckvv9bp73a3cmn"
 
   GetProjectsFunction:
     Type: AWS::Serverless::Function
