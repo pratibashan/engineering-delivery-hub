@@ -26,9 +26,12 @@ export default function Home() {
             Explore Dashboard
           </Link>
 
-          <button className="rounded-lg border border-slate-700 px-5 py-3 font-semibold transition hover:bg-slate-900">
+          <Link
+            href="/architecture"
+            className="rounded-lg border border-slate-700 px-5 py-3 font-semibold transition hover:bg-slate-900"
+          >
             View Architecture
-          </button>
+          </Link>
         </div>
       </section>
     </main>
