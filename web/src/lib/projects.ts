@@ -1,4 +1,5 @@
 import type { Project } from "@/types/dashboard";
+import { fetchWithRefresh } from "@/lib/fetchWithRefresh";
 
 type CreateProjectInput = {
   name: string;
@@ -11,7 +12,7 @@ type CreateProjectInput = {
 export async function createProject(
   input: CreateProjectInput,
 ): Promise<Project> {
-  const response = await fetch("/api/projects", {
+  const response = await fetchWithRefresh("/api/projects", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -38,7 +39,7 @@ export async function updateProject(
   id: string,
   input: UpdateProjectInput,
 ): Promise<Project> {
-  const response = await fetch(`/api/projects/${id}`, {
+  const response = await fetchWithRefresh(`/api/projects/${id}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -54,7 +55,7 @@ export async function updateProject(
 }
 
 export async function deleteProject(id: string): Promise<void> {
-  const response = await fetch(`/api/projects/${id}`, {
+  const response = await fetchWithRefresh(`/api/projects/${id}`, {
     method: "DELETE",
   });
 
@@ -71,7 +72,7 @@ export type ProjectSummary = {
 export async function generateProjectSummary(
   id: string,
 ): Promise<ProjectSummary> {
-  const response = await fetch(`/api/projects/${id}/summary`, {
+  const response = await fetchWithRefresh(`/api/projects/${id}/summary`, {
     method: "POST",
   });
 
