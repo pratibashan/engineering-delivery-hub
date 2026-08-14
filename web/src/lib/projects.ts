@@ -1,41 +1,5 @@
 import type { Project } from "@/types/dashboard";
 
-const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-
-export async function getProjects(): Promise<Project[]> {
-  if (!apiUrl) {
-    throw new Error("NEXT_PUBLIC_API_URL is not configured");
-  }
-
-  const response = await fetch(`${apiUrl}/projects`, {
-    cache: "no-store",
-  });
-
-  if (!response.ok) {
-    throw new Error("Failed to fetch projects");
-  }
-
-  return response.json();
-}
-
-export async function getProjectById(id: string): Promise<Project> {
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-
-  if (!apiUrl) {
-    throw new Error("NEXT_PUBLIC_API_URL is not configured");
-  }
-
-  const response = await fetch(`${apiUrl}/projects/${id}`, {
-    cache: "no-store",
-  });
-
-  if (!response.ok) {
-    throw new Error(`Failed to fetch project: ${response.status}`);
-  }
-
-  return response.json();
-}
-
 type CreateProjectInput = {
   name: string;
   status: Project["status"];
@@ -47,13 +11,7 @@ type CreateProjectInput = {
 export async function createProject(
   input: CreateProjectInput,
 ): Promise<Project> {
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-
-  if (!apiUrl) {
-    throw new Error("NEXT_PUBLIC_API_URL is not configured");
-  }
-
-  const response = await fetch(`${apiUrl}/projects`, {
+  const response = await fetch("/api/projects", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -80,11 +38,7 @@ export async function updateProject(
   id: string,
   input: UpdateProjectInput,
 ): Promise<Project> {
-  if (!apiUrl) {
-    throw new Error("NEXT_PUBLIC_API_URL is not configured");
-  }
-
-  const response = await fetch(`${apiUrl}/projects/${id}`, {
+  const response = await fetch(`/api/projects/${id}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -100,11 +54,7 @@ export async function updateProject(
 }
 
 export async function deleteProject(id: string): Promise<void> {
-  if (!apiUrl) {
-    throw new Error("NEXT_PUBLIC_API_URL is not configured");
-  }
-
-  const response = await fetch(`${apiUrl}/projects/${id}`, {
+  const response = await fetch(`/api/projects/${id}`, {
     method: "DELETE",
   });
 
@@ -121,11 +71,7 @@ export type ProjectSummary = {
 export async function generateProjectSummary(
   id: string,
 ): Promise<ProjectSummary> {
-  if (!apiUrl) {
-    throw new Error("NEXT_PUBLIC_API_URL is not configured");
-  }
-
-  const response = await fetch(`${apiUrl}/projects/${id}/summary`, {
+  const response = await fetch(`/api/projects/${id}/summary`, {
     method: "POST",
   });
 

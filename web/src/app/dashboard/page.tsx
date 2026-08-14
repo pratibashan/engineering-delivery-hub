@@ -2,9 +2,17 @@ import Link from "next/link";
 import StatCard from "@/components/dashboard/StatCard";
 import ProjectList from "@/components/dashboard/ProjectList";
 import { dashboardStats } from "@/data/dashboard";
-import { getProjects } from "@/lib/projects";
+import { getProjects } from "@/lib/projects.server";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 export default async function DashboardPage() {
+  const cookieStore = await cookies();
+  const idToken = cookieStore.get("id_token");
+
+  if (!idToken) {
+    redirect("/api/auth/login");
+  }
   const projects = await getProjects();
 
   return (

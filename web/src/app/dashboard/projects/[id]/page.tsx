@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { getProjectById } from "@/lib/projects";
+import { getProjectById } from "@/lib/projects.server";
 import { getProjectStatusClasses } from "@/lib/projectStatus";
 import DeleteProjectButton from "@/components/projects/DeleteProjectButton";
 import GenerateProjectInsight from "@/components/projects/GenerateProjectInsight";
