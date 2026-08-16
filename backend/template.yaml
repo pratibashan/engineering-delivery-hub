@@ -47,6 +47,7 @@ Resources:
               issuer: "https://cognito-idp.us-east-2.amazonaws.com/us-east-2_RiefwiefU"
               audience:
                 - "1a7mmts4l88gckvv9bp73a3cmn"
+                - "6hdbaget6rk66ef99n8tn7c5om"
 
   GetProjectsFunction:
     Type: AWS::Serverless::Function
