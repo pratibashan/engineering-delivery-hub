@@ -22,6 +22,32 @@ The project demonstrates:
 - Generative AI integration with Amazon Bedrock
 - Infrastructure as Code using AWS SAM
 
+## Application Preview
+
+### Web Dashboard
+
+![Engineering Delivery Hub web dashboard](docs/images/web-dashboard.png)
+
+### Project Delivery & AI Insights
+
+![Project details and AI delivery insight](docs/images/web-project-details.png)
+
+### Responsive Project View
+
+<p align="center">
+  <img
+    src="docs/images/mobile-projects.png"
+    alt="Engineering Delivery Hub responsive projects view"
+    width="340"
+  />
+  &nbsp;&nbsp;
+  <img
+    src="docs/images/mobile-ai-insight.png"
+    alt="AI-powered delivery insight"
+    width="340"
+  />
+</p>
+
 ## Key Features
 
 - Create, view, update, and delete engineering projects
@@ -409,8 +435,8 @@ engineering-delivery-hub/
 │   │       └── [id].tsx
 │   ├── src/
 │   │   ├── api/
-│   │   │   ├── authFetch.ts
 │   │   │   └── projects.ts
+│   │   │
 │   │   │── auth/
 │   │   ├── AuthContext.tsx
 │   │   └── authFetch.ts
