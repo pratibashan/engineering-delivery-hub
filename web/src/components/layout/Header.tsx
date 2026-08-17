@@ -12,43 +12,48 @@ export default async function Header() {
 
   return (
     <header className="border-b border-slate-800 bg-slate-950 text-white">
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-        <Link href="/" className="text-lg font-bold">
-          Engineering Delivery Hub
-        </Link>
+      <div className="mx-auto max-w-6xl px-6 py-4">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <Link
+            href="/"
+            className="text-lg font-bold leading-tight sm:whitespace-nowrap"
+          >
+            Engineering Delivery Hub
+          </Link>
 
-        <nav aria-label="Primary navigation">
-          <ul className="flex items-center gap-6">
-            {navigationItems.map((item) => (
-              <li key={item.href}>
-                <Link
-                  href={item.href}
-                  className="text-sm text-slate-300 transition hover:text-white"
-                >
-                  {item.label}
-                </Link>
+          <nav aria-label="Primary navigation">
+            <ul className="flex flex-wrap items-center gap-3 sm:gap-6">
+              {navigationItems.map((item) => (
+                <li key={item.href}>
+                  <Link
+                    href={item.href}
+                    className="text-sm text-slate-300 transition hover:text-white"
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
+
+              <li>
+                {isAuthenticated ? (
+                  <a
+                    href="/api/auth/logout"
+                    className="inline-flex whitespace-nowrap rounded-lg border border-slate-700 px-4 py-2 text-sm font-semibold text-slate-200 transition hover:bg-slate-800"
+                  >
+                    Sign out
+                  </a>
+                ) : (
+                  <a
+                    href="/api/auth/login"
+                    className="inline-flex whitespace-nowrap rounded-lg border border-slate-700 px-4 py-2 text-sm font-semibold text-slate-200 transition hover:bg-slate-800"
+                  >
+                    Sign in
+                  </a>
+                )}
               </li>
-            ))}
-
-            <li>
-              {isAuthenticated ? (
-                <a
-                  href="/api/auth/logout"
-                  className="rounded-lg border border-slate-700 px-4 py-2 text-sm font-semibold text-slate-200 transition hover:bg-slate-800"
-                >
-                  Sign out
-                </a>
-              ) : (
-                <a
-                  href="/api/auth/login"
-                  className="rounded-lg border border-slate-700 px-4 py-2 text-sm font-semibold text-slate-200 transition hover:bg-slate-800"
-                >
-                  Sign in
-                </a>
-              )}
-            </li>
-          </ul>
-        </nav>
+            </ul>
+          </nav>
+        </div>
       </div>
     </header>
   );
