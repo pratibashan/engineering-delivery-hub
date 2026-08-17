@@ -1,10 +1,10 @@
 import Link from "next/link";
-import StatCard from "@/components/dashboard/StatCard";
-import ProjectList from "@/components/dashboard/ProjectList";
-import { dashboardStats } from "@/data/dashboard";
-import { getProjects } from "@/lib/projects.server";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+
+import StatCard from "@/components/dashboard/StatCard";
+import ProjectList from "@/components/dashboard/ProjectList";
+import { getProjects } from "@/lib/projects.server";
 
 export default async function DashboardPage() {
   const cookieStore = await cookies();
@@ -13,7 +13,31 @@ export default async function DashboardPage() {
   if (!idToken) {
     redirect("/api/auth/login");
   }
+
   const projects = await getProjects();
+
+  const dashboardStats = [
+    {
+      label: "Total projects",
+      value: projects.length,
+      description: "Projects across the engineering workspace",
+    },
+    {
+      label: "On track",
+      value: projects.filter((project) => project.status === "On Track").length,
+      description: "Projects progressing as expected",
+    },
+    {
+      label: "At risk",
+      value: projects.filter((project) => project.status === "At Risk").length,
+      description: "Projects requiring attention",
+    },
+    {
+      label: "Blocked",
+      value: projects.filter((project) => project.status === "Blocked").length,
+      description: "Projects currently blocked",
+    },
+  ];
 
   return (
     <main className="min-h-screen bg-slate-950 text-white">
@@ -29,7 +53,8 @@ export default async function DashboardPage() {
             </h1>
 
             <p className="mt-3 text-slate-400">
-              Review team activity, tasks, blockers, and AI-generated summaries.
+              Review project health, delivery status, blockers, and AI-generated
+              insights.
             </p>
           </div>
 
@@ -41,7 +66,7 @@ export default async function DashboardPage() {
           </Link>
         </div>
 
-        <div className="mt-10 grid gap-5 md:grid-cols-3">
+        <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {dashboardStats.map((stat) => (
             <StatCard
               key={stat.label}
